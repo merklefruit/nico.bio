@@ -3,9 +3,12 @@ title: Overview of Uniswap v3 JIT-liquidity MEV
 date: 2022-05-08
 ---
 
-> In this article I analyze the Uniswap-v3 Just-in-time MEV strategy.
-> This is just a brief overview focusing mostly on the game-theoretic effects
-> without going in technical implementation details.
+<Callout
+  emoji="💬"
+  content="In this article I analyze the Uniswap-v3 Just-in-time MEV strategy.
+    This is just a brief overview focusing mostly on the game-theoretic effects
+    without going in technical implementation details."
+/>
 
 ## Prerequisites & Good to read
 
@@ -16,9 +19,9 @@ date: 2022-05-08
 />
 
 <Bookmark
-  title="What is a JIT liquidity attack?"
+  title="What is a JIT-liquidity attack?"
   href="https://twitter.com/ChainsightLabs/status/1457958811243778052"
-  desc="intro to JIT liquidity attack by chainsight labs"
+  desc="intro to JIT-liquidity attacks by chainsight labs"
 />
 
 <Bookmark
@@ -41,7 +44,7 @@ date: 2022-05-08
 - This has already made the playing field hostile towards passive LPs. Smaller players
   now need to rely on aggregators, vault optimizers or other automation services on top of AMMs
   just to keep their positions online for long.
-- It’s becoming increasingly clear that passive pool management will cease existing soon
+- It's becoming increasingly clear that passive pool management will cease existing soon
   unless someone comes out with a new AMM strategy.
 - JIT builds upon this idea, pushing active LP management to the extreme,
   with bots that try to snipe the trading fees associated with specific big trades.
@@ -74,7 +77,7 @@ Researcher [0xfbifemboy](https://mobile.twitter.com/0xfbifemboy) scraped the ETH
 for instances of this type of MEV.
 
 The results are updated as of March 23rd, 2022.
-From this research, only a small number of bots was found, with one in particular taking the lion’s share of fees:
+From this research, only a small number of bots was found, with one in particular taking the lion's share of fees:
 [0xa57Bd00134B2850B2a1c55860c9e9ea100fDd6CF](https://etherscan.io/address/0xa57Bd00134B2850B2a1c55860c9e9ea100fDd6CF)
 (over 92% of the total for JIT on that pool, ever). 0xa57 is also one of the most active MEV bots on Mainnet.
 
@@ -99,21 +102,21 @@ What are the effects of this strategy on other players?
 
 - For other LPs: this is where it gets tricky.
   Since we will take the majority of the fees, this can be considered as an “attack” on other LPs,
-  especially if they are passively managed and don’t constantly rebalance their positions.
+  especially if they are passively managed and don't constantly rebalance their positions.
 
 ### Consideration #1: Efficiency Trifecta
 
 JIT positions are very narrowly focused. In fact, they are as focused as possible in order
 to capture the entirety of the fees for a specific trade that we know by fact is about to happen.
 
-Capital efficiency in DeFi is a hard concept to master, but in essence it’s a measure of how much
+Capital efficiency in DeFi is a hard concept to master, but in essence it's a measure of how much
 we are getting out of our deployed capital. DeFi is making giant leaps forward in this aspect,
 and Uniswap v3 has indeed been a huge milestone.
 A [great thread](https://twitter.com/haydenzadams/status/1380217938867843072) by Hayden
 explains how a v3 pool can easily be 10 times more efficient than the v2 equivalent:
 basically a v3 pool with $20M can have the same benefits (both in terms of fees paid to LPs and low slippage
 for traders) in the same time period, as a $200M v2 pool. This is already an insane result,
-but recent developments in MEV have started to shed light on what’s technically possible out there:
+but recent developments in MEV have started to shed light on what's technically possible out there:
 
 ![crocswap charts](https://user-images.githubusercontent.com/48695862/167506469-e0f6b602-becd-4f6c-b694-5f2dd088b6ae.png)
 
@@ -133,11 +136,11 @@ distribution of non-JIT fee efficiency.
 ### Consideration #2: Non Atomicity
 
 From my experience reading about MEV for some time, I have learned that atomicity is very important.
-Indeed, a bot is 100 times easier to build if it’s going to deal with the same currency for fees,
-initial and final balances – because then it’s a matter of just checking that the balance difference
+Indeed, a bot is 100 times easier to build if it's going to deal with the same currency for fees,
+initial and final balances – because then it's a matter of just checking that the balance difference
 after the transaction bundle amounts to a positive margin and we know for sure that the operation is going to be profitable.
 
-This is not so simple with JIT. Let’s take a quick example:
+This is not so simple with JIT. Let's take a quick example:
 
 - MEV bot provides 10.9M USDC and 8.3k ETH
 - A trade of 1.9M USDC for 400 ETH lands
@@ -152,17 +155,6 @@ This means that for a strategy of this kind we will probably have to choose one 
    where we seek to get higher APYs for our existing LPs.
 2. Spend “more” (time/effort/gas/research/etc) to find a deterministic way to judge JIT
    trades and perhaps sell all assets after each attack, eliminating inventory risk.
-
-## A Naive execution pipeline
-
-As a style exercise, here is what I would consider doing to execute this strategy in the simplest way possible:
-
-1. Build a bot that can quickly find JIT opportunities by looking at mempool & pool reserves
-2. Try to write down and log the potential profit of a contract executing these strategies
-3. Assess if it’s worth to spend time and effort to continue with the idea
-4. If it’s doable, design an “unsafe and simple” contract to execute the JIT attack
-5. Deploy on an EVM chain with public mempool (possibly with low fees to test)
-6. Iterate/learn/improve
 
 ## Is this considered long-tail MEV?
 
@@ -213,7 +205,7 @@ This means that you would be able to effectively frontrun pending swaps with a s
 making flashloans very viable. Luckily (for Uniswap LPs, at least) this EIP looks like it has been sitting idle
 for more than two years because it has significant security implications for existing smart contracts.
 
-## Sources
+## References
 
 - [Robert Miller, CEO @ Flashbots](https://twitter.com/bertcmiller)
 - [MEV notion master doc](https://forms.gle/1o1Ft8kTJogTCnXN7https://thedailyape.notion.site/MEV-8713cb4c2df24f8483a02135d657a221)
