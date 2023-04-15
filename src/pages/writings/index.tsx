@@ -11,13 +11,13 @@ interface Props {
 export default function Writings({ posts }: Props) {
   return (
     <BaseLayout title="Writings">
-      <div className="font-light">
+      <div className="font-light flex flex-col gap-3">
         {posts.map((post, idx) => (
           <Link key={idx} href={post.url} className="hover:opacity-80">
             <div className="flex items-center justify-between">
               <h3 className="font-normal">{post.title}</h3>
               <p className="text-moonlightStone text-sm">
-                {format(parseISO(post.date), "dd/MM/yyyy")}
+                {format(parseISO(post.date), "LLL dd yyyy")}
               </p>
             </div>
           </Link>

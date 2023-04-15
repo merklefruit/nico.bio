@@ -1,0 +1,91 @@
+---
+title: Open source long-tail MEV
+date: 2022-06-20
+---
+
+Long tail MEV is perhaps the least explored and more mysterious part of this industry.
+
+Even if there lacks a commonly agreed upon definition for this term, most searchers agree that "long tail" refers to
+**all the extravagant and occult profit opportunities that are yet to be found by the majority of players**.
+
+That is, instead of focusing on optimizing arbitrage bots to lose some milliseconds of latency,
+rewriting them in faster languages or spending more money on expensive infra provisioning,
+the goal shifts to finding opportunities that almost nobody else is looking at, and capitalize on them.
+
+We could also say that long tail is simply the point with both minimal competition and acceptable execution difficulty.
+There are many other variables that also impact feasibility, but these are the main ones that stand out
+from other kinds of MEV extraction in my opinion.
+
+I made a simple map of what I think long tail looks like in the MEV playing field:
+
+![mevquest](/assets/quest_mev.png)
+
+The fact that you cannot find even an imcomplete list of recent long tail opportunities
+that have been found by searchers in the past is a testament to the fact that this
+strategies are actually viable and still generating value to this day, and being secretive is
+a key factor to their survival.
+
+That said, I wanted to keep track of these opportunities when I see them on Twitter or Discord, and I decided to publish
+them here since writing things down is the best way for my brain to understand stuff.
+
+---
+
+## List of some open-source long-tail MEV opportunities
+
+### 1. sMEV: Synthetix ETH collateral program deprecation
+
+Directly from the [open-sourced repo](https://github.com/bertmiller/sMEV) from the awesome Bert Miller ⚡️
+
+The repo linked above contains a searcher developed to take advantage of a 1 off MEV opportunity created by the
+Synthetix team deprecating their ETH collateral trial program. As a result of this there were many loans
+that would be liquidatable after the governance proposal was executed. Taking advantage of this required
+a bot that could backrun the governance proposal execution transaction from the mempool as well as monitoring
+and execution infrastructure.
+
+Here is also [a long-form blog post](https://bertcmiller.com/2021/09/05/mev-synthetix.html) of this opportunity
+if you are interested.
+
+Extra: User paco0x also has an [open-source version of a bot for this opportunity](https://github.com/paco0x/snx-liquidator).
+Both Robert and Paco didn't win the opportunity in the end, as there was someone else
+that paid the miners more or sent leaner flashbots bundles. To this day I still consider these repositories
+to be among the best learning resources for "MEV bot anatomy".
+
+### 2. Flashside: Claim Otherside land NFTs
+
+This is an extremely cool and unique use of MEV for NFTs. [Open-source repo](https://github.com/Anish-Agnihotri/flashside)
+by noneother than Anish from Paradigm ✨
+
+Flashside is a set of NFT MEV contracts to claim Otherside NFTs from various BAYC and MAYC pools,
+via flashloans or flashswaps. The basic idea of "Otherside land" was that every owner of a BAYC or MAYC would be able
+to claim an Otherside NFT for 2.5 ETH. Since there are a few liquid NFT markets such as NFTX, NFT20 and Looksrare,
+there was an arbitrage opportunity between the mint price and the price of the liquid pools.
+
+For instance, one possible strategy consisted in:
+
+1. flashloaning ETH
+2. buying a BAYC from the NFTX pool
+3. minting the Otherside Land NFT
+4. selling the BAYC on the same pool
+5. selling the Otherside Land NFT somewhere (NFTX, NFT20, Looksrare, Opensea, etc)
+6. repaying the loan and keeping the profit
+
+I liked this one particularly because it was a very simple idea economically speaking, the genius part was
+realizing that you could leverage liquid NFT markets for this, which was quite creative at the time.
+
+### 3. Crabada auto-looting bot
+
+[Here is the open-sourced repo](https://github.com/C-ollins/crabada) made by searcher Collins on Github 🏆
+
+Crabada is a play2earn game developed on Avalanche. The game mainly consists in battles between crabs, where
+you can composse your NFT crab team and compete with others by playing and looting other teams.
+Of course, the more battles you won the more money you earned, as any classic play2earn model.
+
+Collins made a bot in Go that would play every single day with the max number of teams and crabs,
+and loot automatically by calling smart contracts directly on the blockchain.
+
+The Crabada team had to implement a CAPTCHA feature just to prevent bots from being able to ruin the game...
+but it was a bit too late. Collins was able to extract a hefty $500k USD profit in just 3 months of running the bot
+consistently. [He wrote a detailed Twitter thread about it here.](https://twitter.com/beansgum/status/1525861327490646017)
+
+I believe that opportunities like this are few and far between, but I am sure that we will hear more of these in the future.
+If you're reading this, you're probably already deep into the rabbit hole.

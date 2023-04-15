@@ -1,6 +1,7 @@
 import { Post } from "contentlayer/generated";
 import { format, parseISO } from "date-fns";
 import Head from "next/head";
+import Link from "next/link";
 
 interface Props {
   post: Post;
@@ -9,24 +10,26 @@ interface Props {
 
 export default function PostLayout({ post, children }: Props) {
   return (
-    <div className="max-w-2xl mx-auto pt-24">
+    <div className="px-4 sm:px-2 md:px-0 max-w-2xl mx-auto pt-24">
       <Head>
         <title>{`nico.bio / ${post.title}`}</title>
       </Head>
 
-      <div className="flex items-center justify-start">
-        <h2 className="text-2xl font-medium">{post.title}</h2>
-      </div>
+      <h2 className="text-2xl font-medium">{post.title}</h2>
 
-      <div className="flex items-center justify-start pt-3 gap-3">
-        <p>Read time: x min</p>
-
-        <time dateTime={post.date} className="text-moonlightStone font-light">
-          {format(parseISO(post.date), "LLLL d, yyyy")}
+      <div className="flex items-center justify-between pt-1 gap-3">
+        <time dateTime={post.date} className="text-moonlightText font-light">
+          {format(parseISO(post.date), "LLLL dd yyyy")}
         </time>
+
+        <Link href="/writings" className="hover:text-moonlightStone">
+          <span className="underline decoration-dotted decoration-moonlightStone">
+            Back to Writings
+          </span>
+        </Link>
       </div>
 
-      <main className="pt-8">{children}</main>
+      <main className="pt-8 pb-48">{children}</main>
     </div>
   );
 }

@@ -1,0 +1,229 @@
+---
+title: Overview of Uniswap v3 JIT-liquidity MEV
+date: 2022-05-08
+---
+
+> In this article I analyze the Uniswap-v3 Just-in-time MEV strategy.
+> This is just a brief overview focusing mostly on the game-theoretic effects
+> without going in technical implementation details.
+
+## Prerequisites & Good to read
+
+<Bookmark
+  title="What is MEV?"
+  href="https://docs.flashbots.net/new-to-mev"
+  desc="intro to MEV by flashbots"
+/>
+
+<Bookmark
+  title="What is a JIT liquidity attack?"
+  href="https://twitter.com/ChainsightLabs/status/1457958811243778052"
+  desc="intro to JIT liquidity attack by chainsight labs"
+/>
+
+<Bookmark
+  title="How can JIT benefit DeFi?"
+  href="https://www.coindesk.com/layer2/2022/02/02/just-in-time-liquidity-how-mev-can-enhance-defi-on-ethereum/"
+  desc="an overview of pro and cons of JIT on Ethereum"
+/>
+
+## Motivation
+
+- As DEXes become responsible for more volume every year, it is of foremost importance that
+  they find the most efficient way to utilize the liquidity available.
+- The first generation of AMMs deployed capital in an uniform way across the price pool.
+  This turned out to be quite inefficient, because most often all the trades happen in a specific range of prices.
+- Uniswap v3 brought us concentrated liquidity, which solved the aforementioned problem,
+  but added a lot of complexity to management for LPs.
+- On-chain analyses show that the majority of v3 LPs are actually losing money due to impermanent loss
+  and their positions falling out of range, while a few bigger players have the manpower to actively manage
+  their positions all the time and profit.
+- This has already made the playing field hostile towards passive LPs. Smaller players
+  now need to rely on aggregators, vault optimizers or other automation services on top of AMMs
+  just to keep their positions online for long.
+- It’s becoming increasingly clear that passive pool management will cease existing soon
+  unless someone comes out with a new AMM strategy.
+- JIT builds upon this idea, pushing active LP management to the extreme,
+  with bots that try to snipe the trading fees associated with specific big trades.
+
+## The Strategy
+
+In essence, this strategy consists in a series of `quasi-atomic` steps:
+
+1. Scanning for pending transactions in the mempool that are trying to perform large swaps
+   in particular pools (e.g. trying to swap 1M USDC for 300 ETH on Uniswap)
+
+2. Creating a transaction bundle that contains the following transactions:
+
+   1. We add concentrated liquidity in the exact range of the target swap
+   2. The target swap is performed
+   3. We remove our liquidity position
+
+3. This bundle will be mined in the same block and the result is that our “tailored” liquidity will
+   take the majority of the fees associated with our target swap.
+
+---
+
+For those familiar with the notion of “Sandwich attack” this is not new –
+with the main difference being that sandwich removes value from the user who performs the swap,
+while this strategy removes value for passive LPs. We will see this more in detail later.
+
+### Are there existing bots doing this live on Mainnet?
+
+Researcher [0xfbifemboy](https://mobile.twitter.com/0xfbifemboy) scraped the ETH/USDC Mainnet pool
+for instances of this type of MEV.
+
+The results are updated as of March 23rd, 2022.
+From this research, only a small number of bots was found, with one in particular taking the lion’s share of fees:
+[0xa57Bd00134B2850B2a1c55860c9e9ea100fDd6CF](https://etherscan.io/address/0xa57Bd00134B2850B2a1c55860c9e9ea100fDd6CF)
+(over 92% of the total for JIT on that pool, ever). 0xa57 is also one of the most active MEV bots on Mainnet.
+
+### An example of this strategy in the wild
+
+Check out [this transaction](https://etherscan.io/tx/0x3ded4a5b908e88f2d3f80ecb021aaafd2167cec1da8ffd1eddd7ae9ecd7bd2f4).
+It's the one in the middle of this "sandwich":
+
+![jit mev](https://user-images.githubusercontent.com/48695862/167506369-0b98eed8-2dfe-4f9e-aa17-c24b3bbb7266.png)
+
+In the above screenshot we can see the famous JIT sandwich consisting of "minting liquidity",
+"user trade" and "removing liquidity". The target trade is the one highlighted in the middle,
+which was a swap of about 365k USDC for 130 ETH. This operation can generate about $1000 in trading fees.
+Analyzing the mint and burn transactions, the difference between the value of added and removed tokens
+was in fact very close to $1000, which the bot collected as profit.
+
+What are the effects of this strategy on other players?
+
+- For users: they get liquidity exactly where they want to trade.
+  This means that the end user will have lower slippage and a more favorable trade in general.
+  We can consider it a net positive.
+
+- For other LPs: this is where it gets tricky.
+  Since we will take the majority of the fees, this can be considered as an “attack” on other LPs,
+  especially if they are passively managed and don’t constantly rebalance their positions.
+
+### Consideration #1: Efficiency Trifecta
+
+JIT positions are very narrowly focused. In fact, they are as focused as possible in order
+to capture the entirety of the fees for a specific trade that we know by fact is about to happen.
+
+Capital efficiency in DeFi is a hard concept to master, but in essence it’s a measure of how much
+we are getting out of our deployed capital. DeFi is making giant leaps forward in this aspect,
+and Uniswap v3 has indeed been a huge milestone.
+A [great thread](https://twitter.com/haydenzadams/status/1380217938867843072) by Hayden
+explains how a v3 pool can easily be 10 times more efficient than the v2 equivalent:
+basically a v3 pool with $20M can have the same benefits (both in terms of fees paid to LPs and low slippage
+for traders) in the same time period, as a $200M v2 pool. This is already an insane result,
+but recent developments in MEV have started to shed light on what’s technically possible out there:
+
+![crocswap charts](https://user-images.githubusercontent.com/48695862/167506469-e0f6b602-becd-4f6c-b694-5f2dd088b6ae.png)
+
+(source: [CrocSwap](https://www.crocswap.com/))
+
+On the left chart, we can see the normalized distribution of all liquidity positions for
+ETH/USDC in terms of range. The ones highlighted in blue supposedly correspond to JIT attacks
+where liquidity was added and removed in the same block.
+As we can see, the blue gaussian distribution is a lot narrower, because our JIT positions
+are tailored for a specific range and cease to exist quickly.
+
+On the right chart, we can see the distribution of fees collected by positions normalized
+by time duration of their existence. We can call this “Fee Efficiency”.
+Indeed, the distribution of JIT fee efficiency falls essentially completely outside the
+distribution of non-JIT fee efficiency.
+
+### Consideration #2: Non Atomicity
+
+From my experience reading about MEV for some time, I have learned that atomicity is very important.
+Indeed, a bot is 100 times easier to build if it’s going to deal with the same currency for fees,
+initial and final balances – because then it’s a matter of just checking that the balance difference
+after the transaction bundle amounts to a positive margin and we know for sure that the operation is going to be profitable.
+
+This is not so simple with JIT. Let’s take a quick example:
+
+- MEV bot provides 10.9M USDC and 8.3k ETH
+- A trade of 1.9M USDC for 400 ETH lands
+- MEV bot removes 12.6M USDC and 7.9k ETH
+
+Basically, we end up with different amounts of tokens from the starting balances.
+This makes checking for existing profit more difficult at best, and almost impossible in some cases.
+
+This means that for a strategy of this kind we will probably have to choose one of two routes:
+
+1. Focus on a larger scope and play out a strategy of rebalancing and accumulation
+   where we seek to get higher APYs for our existing LPs.
+2. Spend “more” (time/effort/gas/research/etc) to find a deterministic way to judge JIT
+   trades and perhaps sell all assets after each attack, eliminating inventory risk.
+
+## A Naive execution pipeline
+
+As a style exercise, here is what I would consider doing to execute this strategy in the simplest way possible:
+
+1. Build a bot that can quickly find JIT opportunities by looking at mempool & pool reserves
+2. Try to write down and log the potential profit of a contract executing these strategies
+3. Assess if it’s worth to spend time and effort to continue with the idea
+4. If it’s doable, design an “unsafe and simple” contract to execute the JIT attack
+5. Deploy on an EVM chain with public mempool (possibly with low fees to test)
+6. Iterate/learn/improve
+
+## Is this considered long-tail MEV?
+
+Well, there isn't a proper definition for long-tail, but I believe most can agree that
+every opportunity where there is a good difficulty-reward ratio and low competition is long-tail.
+
+I wouldn't say outright that JIT is long-tail anymore, because it's been around for a while
+and there are already bots that are doing it. However, it's still a very niche strategy
+and it's not as easy to execute as a simple flash loan due to the non-atomicity of the operation.
+
+[Research](https://mirror.xyz/totlsota.eth/hyu-U2Q4qp0hTxnjYdW1sACynZRS1uHOBVQ4CY-uEoc) suggests
+that there are only a handful of bots doing this kind of strategy. Moreover, as of now only [14%
+of total tracked MEV](https://explore.flashbots.net/) is done on Uniswap V3, and this metric probably just tracks arbitrage.
+Going by the cost of this strategy on mainnet, it's likely that research on cheaper networks where Uni-V3 is
+available might be more conclusive.
+
+EDIT: I finally had the time to perform some queries on Polygon to find potential occurrences of JIT attacks there.
+From what I've found, it turns out that nobody ever used a bot for V3 JIT liquidity on this network yet.
+In fact, the only occurrences of V3 positions minting + collecting in the same block are due to some "rebalance" calls
+made by Chainlink Keeper bots or similar, not by a searcher. This makes sense because polygon
+doesn't offer a reliable flashbots relay: the only available one was the MEV-bor client implementation
+made by [Marlin Protocol](https://twitter.com/MarlinProtocol/status/1435129457241518083?s=20&t=txBg7dfGYO3bWr2f1K1rqg)
+which is not validating blocks currently. Moreover, flashbots-style MEV seems to be heavily disincentivized and made more difficult
+by other architectural choices employed by the Polygon team, such as block reorgs that can go 1000 blocks deep, and random propagation delays,
+but this is out of scope for this article.
+
+![polygon jit](https://user-images.githubusercontent.com/48695862/174477869-c94c4b73-de99-4fea-8efb-14d367f63e37.png)
+
+## How can this strategy be neutralized?
+
+It's entirely possible to neutralize this strategy completely, but it would require
+significant architectural cost since Uniswap V3 is already very popular. The best
+approach I've seen to date is the one explained in [Crocswap's Whitepaper](https://www.crocswap.com/whitepaper),
+which is to keep track of the LP position creation timestamp and prevent positions to be
+destroyed unless they are older than a certain threshold. This means that the bot would
+have to be exposed to inventory risk for longer, which undermines the whole atomicity
+of the strategy, making it pointless.
+
+## Can Flashloans be used for this strategy?
+
+The only answer right now is no. JIT is not much different from traditional sandwich attacks, in that it's not possible
+to be executed in a single function call, because we need to encapsulate a third-party user swap
+in the Flashbots bundle – this is why it's called a "sandwich" in the first place.
+
+One interesting turn-around could be [EIP-3074](https://eips.ethereum.org/EIPS/eip-3074), which is a very interesting proposal.
+In short, it would make it possible for contracts to execute internal calls as if they were EOAs.
+This means that you would be able to effectively frontrun pending swaps with a single transction,
+making flashloans very viable. Luckily (for Uniswap LPs, at least) this EIP looks like it has been sitting idle
+for more than two years because it has significant security implications for existing smart contracts.
+
+## Sources
+
+- [Robert Miller, CEO @ Flashbots](https://twitter.com/bertcmiller)
+- [MEV notion master doc](https://forms.gle/1o1Ft8kTJogTCnXN7https://thedailyape.notion.site/MEV-8713cb4c2df24f8483a02135d657a221)
+- [In-depth analysis by 0xfbifemboy](https://crocswap.medium.com/impermanent-loss-and-jit-liquidity-in-the-uniswap-eth-usdc-0-3-pool-8fc58c755d7)
+- [About Uniswap v3 capital efficiency](https://twitter.com/haydenzadams/status/1380217938867843072)
+- [Automated market makers: versioning up](https://ambergroup.medium.com/automated-market-makers-amms-versioning-up-2c8a81e9889f)
+- [Less relevant: JIT MEV opportunities on Ethereum (not Univ3 specific)](https://arxiv.org/pdf/2103.02228.pdf)
+- [Must read on MEV: Flash Boys 2.0](https://arxiv.org/abs/1904.05234)
+- [MEV day talks @ Amsterdam 2022](https://mev.day)
+- [JIT attack on Popsicle](https://twitter.com/ChainsightLabs/status/1467895400648560646)
+- [JIT MEV dune dashboard](<https://dune.xyz/ChainsightAnalytics/Uniswap-v3-Just-in-Time-(JIT)-Liquidity-MEV>)
+- [Frontrunning with EIP-3074](https://ghiliweld.github.io/blog/mev/2022/01/20/frontrunning-3074.html)
+- [JIT liquidity profit curve Desmos tool](https://www.desmos.com/calculator/eokmf5k7rf)

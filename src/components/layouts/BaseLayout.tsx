@@ -9,7 +9,7 @@ interface Props {
 
 export default function BaseLayout({ title, children }: Props) {
   return (
-    <div className="max-w-2xl mx-auto pt-24">
+    <div className="px-4 sm:px-2 md:px-0 max-w-2xl mx-auto pt-24">
       <Head>
         <title>{`nico.bio / ${title}`}</title>
       </Head>

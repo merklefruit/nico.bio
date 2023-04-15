@@ -5,14 +5,14 @@ export default function Home() {
     <BaseLayout title="About">
       <div>
         <p className="text-monochromeCloud font-light">
-          I`&apos;m Nicolas, an Automation engineer living in Milan, Italy.
-          I`&apos;m strongly passioned about Ethereum, the EVM and decentralized
-          applications. I`&apos;m also interested in a wide variety of topics,
+          I&apos;m Nicolas, an Automation engineer living in Milan, Italy.
+          I&apos;m strongly passioned about Ethereum, the EVM and decentralized
+          applications. I&apos;m also interested in a wide variety of topics,
           including open source, web development, high-performance computing,
           machine learning and MEV.
           <br />
           <br />
-          I`&apos;m currently working at{" "}
+          I&apos;m currently working at{" "}
           <a
             className="text-moonlightBlue"
             href="https://fiveelementslabs.com"
@@ -32,9 +32,8 @@ export default function Home() {
           strategies on-chain.
           <br />
           <br />
-          Recently I`&apos;ve been learning Rust to contribute to the
-          open-source Ethereum tooling community, as well as to build my own
-          side-projects.
+          Recently I&apos;ve been learning Rust to contribute to the open-source
+          Ethereum tooling community, as well as to build my own side-projects.
           <br />
           <br />
           To know more about me, check out my writings or my social media
