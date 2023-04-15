@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <div
-      className={`bg-gradient-to-b from-moonlightInterface to-moonlightBase 
+      className={`bg-gradient-to-t from-moonlightInterface to-moonlightBase 
       min-h-screen text-moonlightWhite ${inter.className}`}
     >
       <Component {...pageProps} />
