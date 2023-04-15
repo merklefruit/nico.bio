@@ -54,7 +54,7 @@ export default function Home() {
         •
         <a
           className="hover:text-moonlightStone underline decoration-moonlightStone underline-offset-1"
-          href="https://twitter.com/conyeth"
+          href="https://twitter.com/merklefruit"
           target="_blank"
         >
           Twitter

@@ -3,14 +3,109 @@ title: Building the EVM from scratch
 date: 2022-09-12
 ---
 
-Ullamco et nostrud magna commodo nostrud occaecat quis pariatur id ipsum. Ipsum
-consequat enim id excepteur consequat nostrud esse esse fugiat dolore.
-Reprehenderit occaecat exercitation non cupidatat in eiusmod laborum ex eu
-fugiat aute culpa pariatur. Irure elit proident consequat veniam minim ipsum ex
-pariatur.
+![EVM From Scratch](/assets/evm-from-scratch.png)
 
-Mollit nisi cillum exercitation minim officia velit laborum non Lorem
-adipisicing dolore. Labore commodo consectetur commodo velit adipisicing irure
-dolore dolor reprehenderit aliquip. Reprehenderit cillum mollit eiusmod
-excepteur elit ipsum aute pariatur in. Cupidatat ex culpa velit culpa ad non
-labore exercitation irure laborum.
+<Callout
+  emoji="💬"
+  content="I recently built my own (incomplete) implementation of the Ethereum Virtual Machine 
+    in Typescript. This was made possible thanks to the EVM-From-Scratch 
+    practical challenge built by W1nt3r.eth"
+/>
+
+<Bookmark
+  title="evm-from-scratch repository"
+  desc="Full source code of the project"
+  href="https://github.com/merklefruit/evm-from-scratch"
+/>
+
+## First principles: What is the EVM?
+
+You can skip this section if you want to jump to the implementation details!
+
+Let's start with simple principles: If the Ethereum Protocol was a computer, then the EVM would be its
+operating system, and smart contracts would be the programs running on it. Computers are deterministic:
+this means that if you give exactly the same input to a computer, you will always get the same output.
+This is also why generating random numbers [is so hard](https://blog.cloudflare.com/randomness-101-lavarand-in-production/).
+
+For Ethereum smart contracts to work on a huge network of potentially hundreds of millions of computers across
+the world, we need to be sure that the software running on every single one is deterministic and will give
+the expected output every time. For this to happen on any machine independently of its processor architecture,
+memory blueprint or other hardware differences, we need to abstract away the program's execution from the
+hardware. This is where virtual machines come into play.
+
+In particular, the Ethereum Virtual Machine contains the set of instructions that are supported by
+the protocol and the rules that control the interactions between different smart contracts, transfer
+of value, memory or storage access, and more.
+
+## How is the EVM laid out?
+
+The official source of truth for the EVM implementation is
+the [Ethereum yellow paper](https://ethereum.github.io/yellowpaper/paper.pdf).
+There are a lot of [useful resources](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day00.md)
+explaining its layout, as well as multiple complete implementations in different languages:
+
+- [go-ethereum](https://github.com/ethereum/go-ethereum/blob/master/core/vm/evm.go): Go
+- [py-evm](https://github.com/ethereum/py-evm): Python
+- [evmone](https://github.com/ethereum/evmone): C++
+- [ethereumjs-evm](https://github.com/ethereumjs/ethereumjs-monorepo/tree/master/packages/evm): Typescript
+- [revm](https://github.com/bluealloy/revm): Rust
+
+On its core, the EVM is a stack-based virtual machine with a 32 byte word size and 1024 stack depth.
+The word size was chosen because it can perfectly fit a Keccak256 hash (256 bit),
+which is the hash primitive used for the Ethereum protocol, as well as allowing easy 256-bit integer arithmetic.
+
+Other than the stack, the single EVM execution context includes many other entities, such as memory,
+storage, transaction data, block data, call data, return data and more.
+
+The memory is defined as an ephemeral infinitely-extensible byte array which starts empty at the beginning
+of each execution. In practice, there is a quadratic cost associated with expanding memory, so it
+is not possible to consume more than a limited amount of it.
+
+The storage is a key-value store holding data about each account indexed by address.
+The data is stored in the form of 256-bit words. The storage is a part of the state of
+the blockchain and is updated by the transactions. The way this works is by keeping track of
+the global state via keeping the root hash of the state Merkle tree in each block header.
+[I wrote more about this here](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day12.md).
+
+## What operations can the EVM do?
+
+A full reference of all the EVM assembly instructions can be found [here](https://www.evm.codes/?fork=grayGlacier).
+For my own implementation, I followed [this categorization of instructions](https://ethereum.github.io/execution-specs/autoapi/ethereum/gray_glacier/vm/instructions/index.html):
+
+- Arithmetic: basic integer arithmetic
+- Bitwise Logic: simple logic gates
+- Block: access block information
+- Comparison: compare integer values
+- Control Flow: alter the program counter conditionally
+- Environmental: access calldata, code, return data, balance and other transaction info
+- Keccak: hash functions
+- Logging: on-chain event logs creation
+- Memory: read or write from memory
+- Stack: stack operations such as push or pop
+- Storage: read or write from transient storage
+- System: call sub-execution contexts, create new ethereum accounts
+
+## Development journal
+
+I have documented the building process
+thoroughly day by day [here](https://github.com/merklefruit/evm-from-scratch#progress-log).
+
+- [Day 0](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day00.md): Research of relevant learning material & tools to get started
+- [Day 1](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day01.md): Gathering more resources & reading Mastering Ethereum chapter 13
+- [Day 2](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day02.md): Setting up the EVM-from-scratch challenge & EVM class
+- [Day 3](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day03.md): Reading the yellow paper & EVM inception (EVM inside EVM)
+- [Day 4](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day04.md): Stack & memory implementation & first Opcodes
+- [Day 5](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day05.md): PUSH, POP, SUB Opcodes, MachineState context struct
+- [Day 6](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day06.md): Most Arithmetic, Comparison, Bitwise operations & JUMP Opcodes
+- [Day 7](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day07.md): Memory structure & related Opcodes
+- [Day 8](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day08.md): TxData, globalState, Block data & related Opcodes
+- [Day 9](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day09.md): More Environmental Opcodes & CALLDATALOAD.
+- [Day 10](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day10.md): CALLDATASIZE, CALLDATACOPY, CODESIZE, CODECOPY Opcodes
+- [Day 11](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day11.md): EXTCODESIZE, EXTCODECOPY, SELFBALANCE Opcodes
+- [Day 12](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day12.md): Research & study on the Storage / data layer of the Ethereum protocol
+- [Day 13](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day13.md): Simple Storage implementation, SSTORE, SLOAD, RETURN, REVERT Opcodes
+- [Day 14](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day14.md): Upgraded test file & refactored code, added GAS, LOG Opcodes
+- [Day 15](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day15.md): Major EVM class refactoring & started CALL Opcode
+- [Day 16](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day16.md): Final CALL implementation & RETURNDATASIZE, RETURNDATACOPY Opcodes
+- [Day 17](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day17.md): Opcode runners refactoring, DELEGATECALL, STATICCALL Opcodes
+- [Day 18](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day18.md): CREATE, SELFDESTRUCT Opcodes. Challenge completed!
