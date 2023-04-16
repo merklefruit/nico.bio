@@ -9,7 +9,7 @@ interface Props {
 
 export default function BaseLayout({ title, children }: Props) {
   return (
-    <div className="px-4 sm:px-2 md:px-0 max-w-2xl mx-auto pt-24">
+    <div className="px-4 sm:px-2 md:px-0 max-w-2xl mx-auto py-24">
       <Head>
         <title>{`nico.bio / ${title}`}</title>
       </Head>
@@ -31,15 +31,15 @@ function Nav() {
   return (
     <div className="pt-2 flex gap-3 items-center justify-end w-full">
       <Link
-        href="/writings"
+        href="/articles"
         className={`hover:text-moonlightStone underline 
           underline-offset-2 decoration-dotted decoration-moonlightStone ${
-            router.pathname.includes("/writings")
+            router.pathname.includes("/articles")
               ? "text-moonlightStone cursor-default no-underline"
               : ""
           } `}
       >
-        Writings
+        Articles
       </Link>
       <Link
         href="/"

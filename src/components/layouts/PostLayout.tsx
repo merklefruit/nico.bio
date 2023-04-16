@@ -10,7 +10,7 @@ interface Props {
 
 export default function PostLayout({ post, children }: Props) {
   return (
-    <div className="px-4 sm:px-2 md:px-0 max-w-2xl mx-auto pt-24">
+    <div className="px-4 sm:px-2 md:px-0 max-w-2xl mx-auto py-24">
       <Head>
         <title>{`nico.bio / ${post.title}`}</title>
       </Head>
@@ -19,12 +19,12 @@ export default function PostLayout({ post, children }: Props) {
 
       <div className="flex items-center justify-between pt-1 gap-3">
         <time dateTime={post.date} className="text-moonlightText font-light">
-          {format(parseISO(post.date), "LLLL dd yyyy")}
+          {format(parseISO(post.date), "LLLL d, yyyy")}
         </time>
 
-        <Link href="/writings" className="hover:text-moonlightStone">
+        <Link href="/articles" className="hover:text-moonlightStone">
           <span className="underline decoration-dotted decoration-moonlightStone">
-            Back to Writings
+            Back to Articles
           </span>
         </Link>
       </div>

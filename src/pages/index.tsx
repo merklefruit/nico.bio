@@ -36,7 +36,7 @@ export default function Home() {
           Ethereum tooling community, as well as to build my own side-projects.
           <br />
           <br />
-          To know more about me, check out my writings or my social media
+          To know more about me, check out my articles or my social media
           accounts.
         </p>
       </div>
