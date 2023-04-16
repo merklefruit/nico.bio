@@ -14,7 +14,7 @@ export default function Home() {
           <br />
           I&apos;m currently working at{" "}
           <a
-            className="text-moonlightBlue"
+            className="text-moonlightBlue hover:opacity-80"
             href="https://fiveelementslabs.com"
             target="_blank"
           >
@@ -22,7 +22,7 @@ export default function Home() {
           </a>{" "}
           focusing on the development of{" "}
           <a
-            className="text-moonlightBlue"
+            className="text-moonlightBlue hover:opacity-80"
             href="https://tideprotocol.xyz"
             target="_blank"
           >

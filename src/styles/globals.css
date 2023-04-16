@@ -6,7 +6,7 @@ html {
   background-color: #0f1014; /* moonlightBase */
 }
 
-.link-wrap a {
+.article-content a {
   /* forces long urls to wrap on next line */
   white-space: pre; /* CSS 2.0 */
   white-space: pre-wrap; /* CSS 2.1 */
