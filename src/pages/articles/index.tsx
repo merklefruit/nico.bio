@@ -23,7 +23,7 @@ export default function Articles({ posts }: Props) {
       <div className="font-light flex flex-col gap-4">
         {posts.map((post, idx) => (
           <Link key={idx} href={post.url} className="hover:opacity-80">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-3">
               <h3 className="font-normal">{post.title}</h3>
               <ClientSideOnly>
                 <p className="text-moonlightStone text-sm">

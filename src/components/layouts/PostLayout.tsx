@@ -10,10 +10,21 @@ interface Props {
 
 export default function PostLayout({ post, children }: Props) {
   return (
-    <div className="px-4 sm:px-2 md:px-0 max-w-2xl mx-auto py-24">
+    <div className="px-4 sm:px-2 md:px-0 max-w-2xl mx-auto pt-16 pb-24">
       <Head>
         <title>{`nico.bio / ${post.title}`}</title>
       </Head>
+
+      <div className="pb-8">
+        <Link href="/articles" className="hover:text-moonlightStone">
+          <span className="flex items-center gap-0.5">
+            <span className="text-sm font-medium">{"<-"}</span>{" "}
+            <span className="underline decoration-dotted decoration-moonlightStone">
+              Back
+            </span>
+          </span>
+        </Link>
+      </div>
 
       <h2 className="text-2xl font-medium">{post.title}</h2>
 
@@ -21,15 +32,9 @@ export default function PostLayout({ post, children }: Props) {
         <time dateTime={post.date} className="text-moonlightText font-light">
           {format(parseISO(post.date), "LLLL d, yyyy")}
         </time>
-
-        <Link href="/articles" className="hover:text-moonlightStone">
-          <span className="underline decoration-dotted decoration-moonlightStone">
-            Back to Articles
-          </span>
-        </Link>
       </div>
 
-      <main className="pt-8 pb-48">{children}</main>
+      <main className="pt-4">{children}</main>
     </div>
   );
 }
