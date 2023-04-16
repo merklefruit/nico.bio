@@ -15,7 +15,10 @@ export default function Post({ post }: Props) {
 
   return (
     <PostLayout post={post}>
-      <div className="prose prose-invert max-w-none font-light custom-content tracking-tight leading-7">
+      <div
+        className="prose prose-invert max-w-none font-light 
+        link-wrap article-content tracking-tight leading-7"
+      >
         <MDXContent components={{ Card, Bookmark, Callout }} />
       </div>
     </PostLayout>
