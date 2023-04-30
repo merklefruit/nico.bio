@@ -34,7 +34,9 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
-  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+  const post = allPosts.find(
+    (post) => post._raw.flattenedPath.split("/")[1] === params.slug
+  );
   return {
     props: {
       post,

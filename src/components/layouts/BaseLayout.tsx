@@ -42,6 +42,17 @@ function Nav() {
         Articles
       </Link>
       <Link
+        href="/projects"
+        className={`hover:text-moonlightStone underline 
+          underline-offset-2 decoration-dotted decoration-moonlightStone ${
+            router.pathname.includes("/projects")
+              ? "text-moonlightStone cursor-default no-underline"
+              : ""
+          } `}
+      >
+        Projects
+      </Link>
+      <Link
         href="/"
         className={`hover:text-moonlightStone underline 
           underline-offset-2 decoration-dotted decoration-moonlightStone ${
