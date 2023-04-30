@@ -39,6 +39,24 @@ export const Project = defineDocumentType(() => ({
       description: "The date of the project",
       required: true,
     },
+    description: {
+      type: "string",
+      description: "The description of the project",
+      required: true,
+    },
+    skills: {
+      type: "list",
+      of: {
+        type: "string",
+      },
+      description: "The skills used in the project",
+      required: true,
+    },
+    link: {
+      type: "string",
+      description: "The link to the project",
+      required: false,
+    },
   },
   computedFields: {
     url: {
