@@ -40,7 +40,7 @@ export default function Projects({ projects }: Props) {
               {project.description}
             </p>
             <div className="mt-2 flex items-center justify-between gap-3">
-              <p className="text-moonlightOrange text-opacity-90 text-sm">
+              <p className="text-opacity-90 text-moonlightBlue text-sm">
                 Skills: {project.skills.join(", ")}
               </p>
             </div>
