@@ -87,25 +87,139 @@ For my own implementation, I followed [this categorization of instructions](http
 
 ## Development journal
 
-I have documented the building process
-thoroughly day by day [here](https://github.com/merklefruit/evm-from-scratch#progress-log).
+I have documented the building process thoroughly day by day [here](https://github.com/merklefruit/evm-from-scratch#progress-log).
 
-- [Day 0](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day00.md): Research of relevant learning material & tools to get started
-- [Day 1](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day01.md): Gathering more resources & reading Mastering Ethereum chapter 13
-- [Day 2](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day02.md): Setting up the EVM-from-scratch challenge & EVM class
-- [Day 3](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day03.md): Reading the yellow paper & EVM inception (EVM inside EVM)
-- [Day 4](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day04.md): Stack & memory implementation & first Opcodes
-- [Day 5](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day05.md): PUSH, POP, SUB Opcodes, MachineState context struct
-- [Day 6](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day06.md): Most Arithmetic, Comparison, Bitwise operations & JUMP Opcodes
-- [Day 7](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day07.md): Memory structure & related Opcodes
-- [Day 8](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day08.md): TxData, globalState, Block data & related Opcodes
-- [Day 9](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day09.md): More Environmental Opcodes & CALLDATALOAD.
-- [Day 10](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day10.md): CALLDATASIZE, CALLDATACOPY, CODESIZE, CODECOPY Opcodes
-- [Day 11](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day11.md): EXTCODESIZE, EXTCODECOPY, SELFBALANCE Opcodes
-- [Day 12](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day12.md): Research & study on the Storage / data layer of the Ethereum protocol
-- [Day 13](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day13.md): Simple Storage implementation, SSTORE, SLOAD, RETURN, REVERT Opcodes
-- [Day 14](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day14.md): Upgraded test file & refactored code, added GAS, LOG Opcodes
-- [Day 15](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day15.md): Major EVM class refactoring & started CALL Opcode
-- [Day 16](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day16.md): Final CALL implementation & RETURNDATASIZE, RETURNDATACOPY Opcodes
-- [Day 17](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day17.md): Opcode runners refactoring, DELEGATECALL, STATICCALL Opcodes
-- [Day 18](https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day18.md): CREATE, SELFDESTRUCT Opcodes. Challenge completed!
+Here is a list of all the journal entries:
+
+<Bookmark
+  title="Day 0"
+  emoji="📚"
+  desc="Research of relevant learning material & tools to get started"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day00.md"
+/>
+
+<Bookmark
+  title="Day 1"
+  emoji="📚"
+  desc="Gathering more resources & reading Mastering Ethereum chapter 13"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day01.md"
+/>
+
+<Bookmark
+  title="Day 2"
+  emoji="📚"
+  desc="Setting up the EVM-from-scratch challenge & EVM class"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day02.md"
+/>
+
+<Bookmark
+  title="Day 3"
+  emoji="📚"
+  desc="Reading the yellow paper & EVM inception (EVM inside EVM)"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day03.md"
+/>
+
+<Bookmark
+  title="Day 4"
+  emoji="📚"
+  desc="Stack & memory implementation & first Opcodes"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day04.md"
+/>
+
+<Bookmark
+  title="Day 5"
+  emoji="📚"
+  desc="PUSH, POP, SUB Opcodes, MachineState context struct"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day05.md"
+/>
+
+<Bookmark
+  title="Day 6"
+  emoji="📚"
+  desc="Most Arithmetic, Comparison, Bitwise operations & JUMP Opcodes"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day06.md"
+/>
+
+<Bookmark
+  title="Day 7"
+  emoji="📚"
+  desc="Memory structure & related Opcodes"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day06.md"
+/>
+
+<Bookmark
+  title="Day 8"
+  emoji="📚"
+  desc="TxData, globalState, Block data & related Opcodes"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day08.md"
+/>
+
+<Bookmark
+  title="Day 9"
+  emoji="📚"
+  desc="More Environmental Opcodes & CALLDATALOAD."
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day09.md"
+/>
+
+<Bookmark
+  title="Day 10"
+  emoji="📚"
+  desc="CALLDATASIZE, CALLDATACOPY, CODESIZE, CODECOPY Opcodes"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day10.md"
+/>
+
+<Bookmark
+  title="Day 11"
+  emoji="📚"
+  desc="EXTCODESIZE, EXTCODECOPY, SELFBALANCE Opcodes"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day11.md"
+/>
+
+<Bookmark
+  title="Day 12"
+  emoji="📚"
+  desc="Research & study on the Storage / data layer of the Ethereum protocol"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day12.md"
+/>
+
+<Bookmark
+  title="Day 13"
+  emoji="📚"
+  desc="Simple Storage implementation, SSTORE, SLOAD, RETURN, REVERT Opcodes"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day13.md"
+/>
+
+<Bookmark
+  title="Day 14"
+  emoji="📚"
+  desc="Upgraded test file & refactored code, added GAS, LOG Opcodes"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day14.md"
+/>
+
+<Bookmark
+  title="Day 15"
+  emoji="📚"
+  desc="Major EVM class refactoring & started CALL Opcode"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day15.md"
+/>
+
+<Bookmark
+  title="Day 16"
+  emoji="📚"
+  desc="Final CALL implementation & RETURNDATASIZE, RETURNDATACOPY Opcodes"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day16.md"
+/>
+
+<Bookmark
+  title="Day 17"
+  emoji="📚"
+  desc="Opcode runners refactoring, DELEGATECALL, STATICCALL Opcodes"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day17.md"
+/>
+
+<Bookmark
+  title="Day 18"
+  emoji="📚"
+  desc="CREATE, SELFDESTRUCT Opcodes. Challenge completed!"
+  href="https://github.com/merklefruit/evm-from-scratch/blob/main/daily-progress/day18.md"
+/>
