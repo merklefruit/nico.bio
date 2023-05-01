@@ -1,14 +1,22 @@
 import { allProjects, Project } from "contentlayer/generated";
 import { compareDesc, format, parseISO } from "date-fns";
+import { useMemo } from "react";
 
 import BaseLayout from "@/components/layouts/BaseLayout";
 import ClientSideOnly from "@/components/lib/ClientSideOnly";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 interface Props {
   projects: Project[];
 }
 
 export default function Projects({ projects }: Props) {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const dateFormat = useMemo(
+    () => (isMobile ? "MM/dd/yyyy" : "LLLL d, yyyy"),
+    [isMobile]
+  );
+
   return (
     <BaseLayout title="Projects">
       <div className="pb-8">
@@ -32,7 +40,7 @@ export default function Projects({ projects }: Props) {
 
               <ClientSideOnly>
                 <p className="text-moonlightStone text-sm">
-                  {format(parseISO(project.date), "MMMM yyyy")}
+                  {format(parseISO(project.date), dateFormat)}
                 </p>
               </ClientSideOnly>
             </div>

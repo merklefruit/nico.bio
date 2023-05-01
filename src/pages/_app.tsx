@@ -14,6 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
       min-h-screen text-moonlightWhite ${inter.className}`}
     >
       <Head>
+        {/* Optional analytics snippet */}
         <script
           defer
           id="pirschjs"
