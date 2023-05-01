@@ -4,6 +4,7 @@ import { useMDXComponent } from "next-contentlayer/hooks";
 import PostLayout from "@/components/layouts/PostLayout";
 import Bookmark from "@/components/mdx/Bookmark";
 import Callout from "@/components/mdx/Callout";
+import Footnotes from "@/components/mdx/Footnotes";
 
 interface Props {
   post: Post;
@@ -18,7 +19,7 @@ export default function Post({ post }: Props) {
         className="prose prose-invert max-w-none font-light 
         article-content tracking-tight leading-7"
       >
-        <MDXContent components={{ Bookmark, Callout }} />
+        <MDXContent components={{ Bookmark, Callout, Footnotes }} />
       </div>
     </PostLayout>
   );

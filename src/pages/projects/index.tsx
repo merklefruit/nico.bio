@@ -21,8 +21,11 @@ export default function Projects({ projects }: Props) {
     <BaseLayout title="Projects">
       <div className="pb-8">
         <p className="text-monochromeCloud font-light">
-          Here&apos;s a list of my public side-projects I&apos;ve worked on in
-          my spare time.
+          Here&apos;s a list of the{" "}
+          <span className="font-semibold">public and completed</span>{" "}
+          side-projects I&apos;ve built in my spare time.
+          {isMobile ? " " : <br />}
+          The rest are either private, in-progress or abandoned.
         </p>
       </div>
       <div className="font-light flex flex-col gap-4">
@@ -31,7 +34,9 @@ export default function Projects({ projects }: Props) {
             key={idx}
             href={project.link ?? project.url}
             target={project.link ? "_blank" : "_self"}
-            className="hover:opacity-80 pb-3 border-b border-b-monochromeKashmir border-opacity-30"
+            className={`hover:opacity-80 pb-3 border-b border-b-monochromeKashmir border-opacity-30
+            ${idx === projects.length - 1 ? "border-none" : ""}
+            ${project.link ? "cursor-alias" : "cursor-pointer"}`}
           >
             <div className="flex items-center justify-between gap-3">
               <h3 className="font-normal underline-offset-1">
