@@ -32,8 +32,9 @@ export default function Home() {
           strategies on-chain.
           <br />
           <br />
-          Recently I&apos;ve been learning Rust to contribute to the open-source
-          Ethereum tooling community, as well as to build my own side-projects.
+          In my free time, I like to contribute to open-source projects related
+          to the Ethereum ecosystem in Rust and Solidity. I&apos;m also always
+          building personal projects to learn new things and improve my skills.
           <br />
           <br />
           To know more about me, check out my articles or my social media
