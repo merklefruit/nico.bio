@@ -20,7 +20,9 @@ export default function BaseLayout({ title, children }: Props) {
 
       <Nav />
 
-      <main className="pt-10 w-full">{children}</main>
+      <main className="pt-10 w-full animate-in fade-in fade-out ease-in-out duration-1000">
+        {children}
+      </main>
     </div>
   );
 }
