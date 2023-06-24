@@ -1,7 +1,6 @@
 import "@/styles/globals.css";
 
 import { Inter } from "next/font/google";
-import Head from "next/head";
 
 import type { AppProps } from "next/app";
 
@@ -13,17 +12,6 @@ export default function App({ Component, pageProps }: AppProps) {
       className={`bg-gradient-to-t from-moonlightInterface to-moonlightBase 
       min-h-screen text-moonlightWhite ${inter.className}`}
     >
-      <Head>
-        {/* Optional analytics snippet */}
-        <script
-          defer
-          id="pirschjs"
-          type="text/javascript"
-          src="https://api.pirsch.io/pirsch.js"
-          data-code="SOAHHIcBiJFDKELHN3dz6Y1XUty0anTs"
-        />
-      </Head>
-
       <Component {...pageProps} />
     </div>
   );
