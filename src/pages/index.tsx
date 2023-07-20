@@ -7,31 +7,29 @@ export default function Home() {
     <BaseLayout title="About">
       <div>
         <p className="text-monochromeCloud font-light">
-          I&apos;m Nicolas, a blockchain engineer based in Italy. I&apos;m
-          strongly passioned about the future of Ethereum, the EVM and
-          distributed systems. I&apos;m also interested in a wide variety of
-          topics, including game theory, web development, high-performance
-          computing and machine learning.
+          I&apos;m Nicolas, a Blockchain engineer & researcher focusing on the
+          Ethereum ecosystem. I&apos;m also interested in a wide variety of
+          topics including game theory, high-performance computing and machine
+          learning.
           <br />
           <br />
           I&apos;m currently working at{" "}
           <a
             className="text-moonlightBlue hover:opacity-80"
-            href="https://fiveelementslabs.com"
+            href="https://www.chainbound.io/"
             target="_blank"
           >
-            FiveElementsLabs
+            Chainbound
           </a>{" "}
           focusing on the development of{" "}
           <a
             className="text-moonlightBlue hover:opacity-80"
-            href="https://tideprotocol.xyz"
+            href="https://fiber.chainbound.io/"
             target="_blank"
           >
-            Tide Protocol
+            Fiber
           </a>
-          , a tool for DeFi projects to launch, manage and track their marketing
-          strategies on-chain.
+          , a global high-performance Ethereum mempool streaming service.
           <br />
           <br />
           In my free time, I like to contribute to open-source projects related
