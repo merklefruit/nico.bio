@@ -2,6 +2,7 @@ import { allPosts, Post } from "contentlayer/generated";
 import { compareDesc, format, parseISO } from "date-fns";
 import Link from "next/link";
 import { useMemo } from "react";
+import { Newspaper } from "lucide-react";
 
 import BaseLayout from "@/components/layouts/BaseLayout";
 import ClientSideOnly from "@/components/lib/ClientSideOnly";
@@ -19,7 +20,7 @@ export default function Articles({ posts }: Props) {
   );
 
   return (
-    <BaseLayout title="Articles">
+    <BaseLayout title="Articles" icon=<Newspaper />>
       <div className="font-light flex flex-col gap-4">
         {posts.map((post, idx) => (
           <Link key={idx} href={post.url} className="hover:opacity-80">

@@ -1,20 +1,23 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { LucideIcon } from "lucide-react";
 
 interface Props {
   title: string;
+  icon: React.ReactNode;
   children: React.ReactNode;
 }
 
-export default function BaseLayout({ title, children }: Props) {
+export default function BaseLayout({ title, icon, children }: Props) {
   return (
     <div className="px-4 sm:px-2 md:px-0 max-w-2xl mx-auto py-24">
       <Head>
         <title>{`nico.bio / ${title}`}</title>
       </Head>
 
-      <div className="flex items-center justify-start">
+      <div className="flex items-center justify-start gap-2.5">
+        {icon}
         <h2 className="text-2xl font-medium">{title}</h2>
       </div>
 

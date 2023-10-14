@@ -1,5 +1,6 @@
 import { allProjects, Project } from "contentlayer/generated";
 import { compareDesc, format, parseISO } from "date-fns";
+import { Boxes, ExternalLink, Github } from "lucide-react";
 import { useMemo } from "react";
 
 import BaseLayout from "@/components/layouts/BaseLayout";
@@ -18,11 +19,13 @@ export default function Projects({ projects }: Props) {
   );
 
   return (
-    <BaseLayout title="Projects">
+    <BaseLayout title="Projects" icon={<Boxes />}>
       <div className="pb-8">
         <p className="text-monochromeCloud font-light">
           Here&apos;s a list of the{" "}
-          <span className="font-semibold">public and completed</span>{" "}
+          <span className="font-medium underline decoration-dashed">
+            public and completed
+          </span>{" "}
           side-projects I&apos;ve built in my spare time.
           {isMobile ? " " : <br />}
           The rest are either private, in-progress or abandoned.
@@ -39,9 +42,20 @@ export default function Projects({ projects }: Props) {
             ${project.link ? "cursor-alias" : "cursor-pointer"}`}
           >
             <div className="flex items-center justify-between gap-3">
-              <h3 className="font-normal underline-offset-1">
-                {project.title}
-              </h3>
+              <div className="flex gap-2">
+                {project.link?.includes("github") ? (
+                  <Github strokeWidth={1.5} size={20} className="mt-0.5" />
+                ) : (
+                  <ExternalLink
+                    strokeWidth={1.5}
+                    size={18}
+                    className="mt-0.5"
+                  />
+                )}
+                <h3 className="font-normal underline-offset-1">
+                  {project.title}
+                </h3>
+              </div>
 
               <ClientSideOnly>
                 <p className="text-moonlightStone text-sm">
