@@ -7,12 +7,13 @@ export default function Home() {
     <BaseLayout title="About">
       <div>
         <p className="text-monochromeCloud font-light">
-          Hi! I&apos;m Nicolas, a software engineer based in Italy. My passions
-          lie in the fields of blockchain, high-performance computing and
-          machine learning.
+          Hi! I&apos;m Nicolas, a software engineer based in Italy.
+          <br />
+          I&apos;m interested in distributed systems, blockchain and machine
+          learning.
           <br />
           <br />
-          I&apos;m currently working at{" "}
+          I&apos;m working at{" "}
           <a
             className="text-moonlightBlue hover:opacity-80"
             href="https://www.chainbound.io/"
@@ -20,15 +21,7 @@ export default function Home() {
           >
             Chainbound
           </a>{" "}
-          on building{" "}
-          <a
-            className="text-moonlightBlue hover:opacity-80"
-            href="https://fiber.chainbound.io/"
-            target="_blank"
-          >
-            Fiber
-          </a>{" "}
-          – a global, speed-optimized Ethereum mempool streaming service.
+          on building latency-optimized infrastructure for Ethereum.
           <br />
           <br />
           In my free time, I love contributing to open-source initiatives,
