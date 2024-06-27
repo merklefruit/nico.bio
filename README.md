@@ -22,7 +22,6 @@ Otherwise, it will open the specified link in a new tab.
 - Content styled using TailwindCSS with the typography plugin for a nice reading experience.
 - Reading time estimation for each post via the `useReadingTime` hook.
 - Absolute import paths using the `@/` prefix.
-- Support for analytics via `pirsch.io` in `_app.tsx`.
 - Fonts are loaded via the new `next/font` package.
 
 ## Getting started
@@ -35,15 +34,3 @@ yarn install
 yarn build
 yarn dev
 ```
-
-## Deploying
-
-This project is deployed on Vercel, and the deployment is triggered automatically on every push to the `main` branch.
-
-## Credits
-
-- [NextJS](https://nextjs.org/)
-- [TailwindCSS](https://tailwindcss.com/)
-- [Contentlayer](https://contentlayer.dev/)
-- [Sequoia color theme](https://sequoiatheme.com/)
-- [Vercel](https://vercel.com/)

@@ -20,17 +20,6 @@ export default function Projects({ projects }: Props) {
 
   return (
     <BaseLayout title="Projects" icon={<Boxes />}>
-      <div className="pb-8">
-        <p className="text-monochromeCloud font-light">
-          Here&apos;s a list of the{" "}
-          <span className="font-medium underline decoration-dashed">
-            public and completed
-          </span>{" "}
-          side-projects I&apos;ve built in my spare time.
-          {isMobile ? " " : <br />}
-          The rest are either private, in-progress or abandoned.
-        </p>
-      </div>
       <div className="font-light flex flex-col gap-4">
         {projects.map((project, idx) => (
           <a

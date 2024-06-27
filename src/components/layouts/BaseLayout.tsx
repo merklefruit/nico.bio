@@ -46,6 +46,7 @@ function Nav() {
       >
         Articles
       </Link>
+
       <Link
         href="/projects"
         className={`hover:text-moonlightStone underline 
@@ -57,6 +58,7 @@ function Nav() {
       >
         Projects
       </Link>
+
       <Link
         href="/"
         className={`hover:text-moonlightStone underline 
