@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
 	return (
 		<div
 			className={`bg-gradient-to-t from-moonlightInterface to-moonlightBase
-      min-h-screen text-moonlightWhite ${inter.className}`}
+      h-screen overflow-hidden text-moonlightWhite ${inter.className}`}
 		>
 			<Component {...pageProps} />
 		</div>

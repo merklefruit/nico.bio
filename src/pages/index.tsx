@@ -28,7 +28,7 @@ export default function Home() {
 			<Logo3D className="absolute inset-0 w-full h-full" />
 
 			{/* Bottom left info */}
-			<div className="absolute bottom-10 left-8 max-w-md flex flex-col gap-4 z-10">
+			<div className="absolute bottom-24 sm:bottom-10 left-6 sm:left-8 max-w-xs sm:max-w-md flex flex-col gap-4 z-10">
 				<div className="flex flex-col gap-1">
 					<h1
 						className="text-2xl text-monochromeCloud font-medium opacity-0 animate-fade-up"
@@ -54,7 +54,7 @@ export default function Home() {
 
 			{/* Bottom right links */}
 			<div
-				className="absolute bottom-10 right-8 flex items-center gap-5 z-10 opacity-0 animate-fade-up"
+				className="absolute bottom-6 sm:bottom-10 left-6 sm:left-auto sm:right-8 flex items-center gap-5 z-10 opacity-0 animate-fade-up"
 				style={{ animationDelay: "0.8s" }}
 			>
 				<MagneticLink

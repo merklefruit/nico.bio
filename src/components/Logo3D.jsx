@@ -3,7 +3,7 @@
 import { Environment } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { CuboidCollider, Physics, RigidBody } from "@react-three/rapier";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 function Pointer() {
@@ -108,9 +108,25 @@ function useEthereumGeometry() {
 function EthereumLogo() {
 	const ref = useRef(null);
 	const geometry = useEthereumGeometry();
+	const [ready, setReady] = useState(false);
+	const frameCount = useRef(0);
 
 	useFrame(() => {
 		if (ref.current) {
+			frameCount.current += 1;
+
+			// Wait for physics to stabilize (about 1 second at 60fps)
+			if (frameCount.current < 60) {
+				// Keep it completely still during startup
+				ref.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
+				ref.current.setAngvel({ x: 0, y: 0, z: 0 }, true);
+				return;
+			}
+
+			if (!ready) {
+				setReady(true);
+			}
+
 			const angVel = ref.current.angvel();
 			const angSpeed = Math.sqrt(angVel.x ** 2 + angVel.y ** 2 + angVel.z ** 2);
 
