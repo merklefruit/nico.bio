@@ -5,9 +5,18 @@
 html,
 body {
 	background-color: #0f1014; /* moonlightBase */
-	overflow: hidden;
 	height: 100%;
 	width: 100%;
+}
+
+/* Hide scrollbar visually but keep scroll functionality */
+html {
+	scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none; /* IE/Edge */
+}
+
+html::-webkit-scrollbar {
+	display: none; /* Chrome, Safari, Opera */
 }
 
 .article-content a {

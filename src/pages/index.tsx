@@ -15,7 +15,7 @@ const CustomCursor = dynamic(() => import("@/components/CustomCursor"), {
 
 export default function Home() {
 	return (
-		<div className="h-screen w-screen relative overflow-hidden">
+		<div className="min-h-screen w-screen relative">
 			<Head>
 				<title>nico.bio</title>
 			</Head>
