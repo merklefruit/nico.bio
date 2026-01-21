@@ -1,75 +1,86 @@
-import { Fingerprint, Github, Mail, Twitter } from "lucide-react";
+import GrainOverlay from "@/components/GrainOverlay";
+import MagneticLink from "@/components/MagneticLink";
+import Vignette from "@/components/Vignette";
+import { Github, Mail, Twitter } from "lucide-react";
+import dynamic from "next/dynamic";
+import Head from "next/head";
 
-import BaseLayout from "@/components/layouts/BaseLayout";
+const Logo3D = dynamic(() => import("@/components/Logo3D"), {
+	ssr: false,
+});
+
+const CustomCursor = dynamic(() => import("@/components/CustomCursor"), {
+	ssr: false,
+});
 
 export default function Home() {
-  return (
-    <BaseLayout title="About" icon={<Fingerprint />}>
-      <div>
-        <p className="text-monochromeCloud font-light">
-          I&apos;m Nicolas, a blockchain engineer and researcher focusing on the
-          Ethereum ecosystem.
-          <br />
-          <br />
-          I&apos;m working on latency-optimized infrastructure for MEV at{" "}
-          <a
-            className="hover:opacity-80 text-moonlightBlue decoration-dotted underline decoration-moonlightBlue underline-offset-1"
-            href="https://www.chainbound.io/"
-            target="_blank"
-          >
-            Chainbound
-          </a>
-          , and I love contributing to open-source projects to learn stuff.
-        </p>
-      </div>
+	return (
+		<div className="h-screen w-screen relative overflow-hidden">
+			<Head>
+				<title>nico.bio</title>
+			</Head>
 
-      <div className="pt-10 w-full flex flex-col gap-3 font-light opacity-80">
-        <div className="flex gap-3.5">
-          <div className="flex gap-2">
-            <Github strokeWidth={1.5} size={20} className="mt-0.5" />
-            <p>Github</p>
-          </div>
-          <div className="w-full border-b border-moonlightSoft mb-2.5" />
-          <a
-            className="hover:text-moonlightStone underline decoration-moonlightStone underline-offset-1"
-            href="https://github.com/merklefruit"
-            target="_blank"
-          >
-            @merklefruit
-          </a>
-        </div>
+			<CustomCursor />
+			<GrainOverlay />
+			<Vignette />
 
-        <div className="flex gap-3.5">
-          <div className="flex gap-2">
-            <Twitter strokeWidth={1.5} size={20} className="mt-0.5" />
-            <p>Twitter</p>
-          </div>
-          <div className="w-full border-b border-moonlightSoft mb-2.5" />
-          <a
-            className="hover:text-moonlightStone underline decoration-moonlightStone underline-offset-1"
-            href="https://twitter.com/merklefruit"
-            target="_blank"
-          >
-            @merklefruit
-          </a>
-        </div>
+			{/* Full screen 3D canvas */}
+			<Logo3D className="absolute inset-0 w-full h-full" />
 
-        <div className="flex gap-3.5">
-          <div className="flex gap-2">
-            <Mail strokeWidth={1.5} size={19} className="mt-0.5" />
-            <p>Email</p>
-          </div>
-          <div className="w-full border-b border-moonlightSoft mb-2.5" />
-          <a
-            className="hover:text-moonlightStone underline decoration-moonlightStone 
-            underline-offset-1 min-w-max"
-            href="mailto:merklefruit@proton.me"
-            target="_blank"
-          >
-            merklefruit@proton.me
-          </a>
-        </div>
-      </div>
-    </BaseLayout>
-  );
+			{/* Bottom left info */}
+			<div className="absolute bottom-10 left-8 max-w-md flex flex-col gap-4 z-10">
+				<div className="flex flex-col gap-1">
+					<h1
+						className="text-2xl text-monochromeCloud font-medium opacity-0 animate-fade-up"
+						style={{ animationDelay: "0.2s" }}
+					>
+						Nicolas
+					</h1>
+					<p
+						className="text-sm text-moonlightStone uppercase tracking-widest opacity-0 animate-fade-up"
+						style={{ animationDelay: "0.4s" }}
+					>
+						Blockchain Engineer
+					</p>
+				</div>
+				<p
+					className="text-sm text-moonlightSlight leading-relaxed opacity-0 animate-fade-up"
+					style={{ animationDelay: "0.6s" }}
+				>
+					Building blockchain infrastructure, focused on the Ethereum ecosystem.
+					Open-source software & Rust enthusiast.
+				</p>
+			</div>
+
+			{/* Bottom right links */}
+			<div
+				className="absolute bottom-10 right-8 flex items-center gap-5 z-10 opacity-0 animate-fade-up"
+				style={{ animationDelay: "0.8s" }}
+			>
+				<MagneticLink
+					href="https://github.com/merklefruit"
+					external
+					className="text-moonlightStone hover:text-monochromeCloud transition-colors"
+					ariaLabel="GitHub"
+				>
+					<Github size={20} strokeWidth={1.5} />
+				</MagneticLink>
+				<MagneticLink
+					href="https://x.com/merklefruit"
+					external
+					className="text-moonlightStone hover:text-monochromeCloud transition-colors"
+					ariaLabel="X"
+				>
+					<Twitter size={20} strokeWidth={1.5} />
+				</MagneticLink>
+				<MagneticLink
+					href="mailto:merklefruit@proton.me"
+					className="text-moonlightStone hover:text-monochromeCloud transition-colors"
+					ariaLabel="Email"
+				>
+					<Mail size={20} strokeWidth={1.5} />
+				</MagneticLink>
+			</div>
+		</div>
+	);
 }

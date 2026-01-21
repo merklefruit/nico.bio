@@ -1,41 +1,50 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx}",
-    "./src/components/**/*.{js,ts,jsx,tsx}",
-    "./src/app/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {
-      colors: {
-        //Base Colors
-        moonlightBase: "#0F1014",
-        moonlightInterface: "#111216",
-        moonlightOverlay: "#131317",
-        moonlightSoft: "#43444D",
-        moonlightSlight: "#575861",
-        moonlightText: "#868690",
-        moonlightFocusLow: "#121216",
-        moonlightFocusMedium: "#1A1B1F",
-        moonlightFocusHigh: "#1F1F24",
+	content: [
+		"./src/pages/**/*.{js,ts,jsx,tsx}",
+		"./src/components/**/*.{js,ts,jsx,tsx}",
+		"./src/app/**/*.{js,ts,jsx,tsx}",
+	],
+	theme: {
+		extend: {
+			keyframes: {
+				"fade-up": {
+					"0%": { opacity: "0", transform: "translateY(20px)" },
+					"100%": { opacity: "1", transform: "translateY(0)" },
+				},
+			},
+			animation: {
+				"fade-up": "fade-up 0.8s ease-out forwards",
+			},
+			colors: {
+				//Base Colors
+				moonlightBase: "#0F1014",
+				moonlightInterface: "#111216",
+				moonlightOverlay: "#131317",
+				moonlightSoft: "#43444D",
+				moonlightSlight: "#575861",
+				moonlightText: "#868690",
+				moonlightFocusLow: "#121216",
+				moonlightFocusMedium: "#1A1B1F",
+				moonlightFocusHigh: "#1F1F24",
 
-        //Moonlight Accents
-        moonlightWhite: "#fdfdfe",
-        moonlightStone: "#9898a6",
-        moonlightOrange: "#ffbb88",
-        moonlightPink: "#f58ee0",
-        moonlightIndigo: "#c58fff",
-        moonlightBlue: "#8eb6f5",
+				//Moonlight Accents
+				moonlightWhite: "#fdfdfe",
+				moonlightStone: "#9898a6",
+				moonlightOrange: "#ffbb88",
+				moonlightPink: "#f58ee0",
+				moonlightIndigo: "#c58fff",
+				moonlightBlue: "#8eb6f5",
 
-        //Monochrome Accents
-        monochromeKashmir: "#626983",
-        monochromeSlate: "#7C829D",
-        monochromeLogan: "#999EB2",
-        monochromeCadet: "#B6BAC8",
-        monochromeCat: "#D3D5DE",
-        monochromeCloud: "#E2E4ED",
-      },
-    },
-  },
-  plugins: [require("@tailwindcss/typography"), require("tailwindcss-animate")],
+				//Monochrome Accents
+				monochromeKashmir: "#626983",
+				monochromeSlate: "#7C829D",
+				monochromeLogan: "#999EB2",
+				monochromeCadet: "#B6BAC8",
+				monochromeCat: "#D3D5DE",
+				monochromeCloud: "#E2E4ED",
+			},
+		},
+	},
+	plugins: [require("@tailwindcss/typography"), require("tailwindcss-animate")],
 };
